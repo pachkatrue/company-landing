@@ -1,57 +1,55 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-// Интерфейс для данных контактной формы
 interface ContactData {
   name: string;
   email: string;
   message: string;
 }
 
-// Интерфейс для ответа API
 interface ApiResponse {
   success: boolean;
   message: string;
 }
 
-/**
- * Обработчик API для контактной формы
- * Получает данные формы, валидирует их и отправляет ответ
- */
+const isValidContactData = (value: unknown): value is ContactData => {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const data = value as Record<string, unknown>;
+
+  return (
+    typeof data.name === 'string' &&
+    data.name.trim().length > 0 &&
+    typeof data.email === 'string' &&
+    data.email.trim().length > 0 &&
+    typeof data.message === 'string' &&
+    data.message.trim().length > 0
+  );
+};
+
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse>
+  res: NextApiResponse<ApiResponse>,
 ) {
-  // Проверка метода запроса
   if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+
     return res.status(405).json({
       success: false,
-      message: 'Method not allowed'
+      message: 'Method not allowed',
     });
   }
 
-  const { name, email, message } = req.body as ContactData;
-
-  // Валидация обязательных полей
-  if (!name || !email || !message) {
+  if (!isValidContactData(req.body)) {
     return res.status(400).json({
       success: false,
-      message: 'All fields are required'
+      message: 'Name, email and message are required',
     });
   }
 
-  // Логируем данные в консоль (согласно требованиям)
-  console.log('Contact form data received:');
-  console.log('Name:', name);
-  console.log('Email:', email);
-  console.log('Message:', message);
-
-  // В реальном проекте здесь был бы код для сохранения данных в БД
-  // или отправки их по электронной почте с использованием сервисов
-  // типа SendGrid, Mailgun и т.д.
-
-  // Возвращаем успешный ответ в требуемом формате
   return res.status(200).json({
     success: true,
-    message: `Thank you for your interest, ${name}`
+    message: 'Thank you for your interest, ' + req.body.name.trim(),
   });
 }
