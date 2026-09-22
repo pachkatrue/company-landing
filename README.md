@@ -2,6 +2,12 @@
 
 Responsive company landing page built with Next.js and TypeScript, with a focus on performance, accessibility, SEO and responsive UI.
 
+## Preview
+
+[Live demo](https://selfie-some-company-website.netlify.app)
+
+![Project preview](https://d33wubrfki0l68.cloudfront.net/6ab27d73225ab00008ff4af7/screenshot_2026-09-22-13-07-56-0000.webp)
+
 ## Highlights
 
 - Responsive layout for desktop and mobile
