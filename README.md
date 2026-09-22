@@ -20,10 +20,10 @@ Responsive company landing page built with Next.js and TypeScript, with a focus 
 
 ## Tech stack
 
-- Next.js 13
+- Next.js 15.5
 - TypeScript
 - Material UI
-- Styled Components
+- Styled Components + Emotion
 - Intersection Observer API
 
 ## Getting started
@@ -47,6 +47,14 @@ npm run start
 ## Project focus
 
 This project demonstrates frontend implementation with attention to responsive design, accessibility, SEO and performance rather than only visual layout.
+
+## Code quality
+
+ESLint is configured through Next.js' flat-config-compatible setup and can be run with:
+
+```bash
+npm run lint
+```
 
 ## Deployment
 
